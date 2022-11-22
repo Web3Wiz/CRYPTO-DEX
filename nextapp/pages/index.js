@@ -106,17 +106,21 @@ export default function Home() {
     setReservedCD(_reservedCD);
   };
   const _addLiquidity = async () => {
-    const addEitherInWei = utils.parseEther(addEther.toString());
-    if (!addEitherInWei.eq(zero) && !addCDTokens.eq(zero)) {
-      const signer = await getProviderOrSigner(true);
-      setLoading(true);
-      await addLiquidity(signer, addCDTokens, addEitherInWei);
-      setLoading(false);
+    try {
+      const addEitherInWei = utils.parseEther(addEther.toString());
+      if (!addEitherInWei.eq(zero) && !addCDTokens.eq(zero)) {
+        const signer = await getProviderOrSigner(true);
+        setLoading(true);
+        await addLiquidity(signer, addCDTokens, addEitherInWei);
+        setLoading(false);
 
-      setAddCDTokens(zero);
-      await _getAmounts();
-    } else {
-      setAddCDTokens(zero);
+        setAddCDTokens(zero);
+        await _getAmounts();
+      } else {
+        setAddCDTokens(zero);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   const _removeLiquidity = async () => {
@@ -177,6 +181,7 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
+      window.alert(error.message);
       setLoading(false);
       await _getAmounts();
       setSwapAmount("");
