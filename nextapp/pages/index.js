@@ -213,7 +213,7 @@ export default function Home() {
 
     if (loading) {
       return (
-        <button className={styles.button}>Processing... Please wait!</button>
+        <button className={styles.button}>Processing... Please wait</button>
       );
     }
 
