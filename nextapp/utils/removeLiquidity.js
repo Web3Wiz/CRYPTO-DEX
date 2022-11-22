@@ -10,20 +10,16 @@ export const removeLiquidity = async (
   signer,
   cryptoDevLPTokensToRemoveInWei
 ) => {
-  try {
-    const exchangeContract = new Contract(
-      EXCHANGE_CONTRACT_ADDRESS,
-      EXCHANGE_CONTRACT_ABI,
-      signer
-    );
+  const exchangeContract = new Contract(
+    EXCHANGE_CONTRACT_ADDRESS,
+    EXCHANGE_CONTRACT_ABI,
+    signer
+  );
 
-    const tx = await exchangeContract.removeLiquidity(
-      cryptoDevLPTokensToRemoveInWei
-    );
-    await tx.wait();
-  } catch (error) {
-    console.error(error);
-  }
+  const tx = await exchangeContract.removeLiquidity(
+    cryptoDevLPTokensToRemoveInWei
+  );
+  await tx.wait();
 };
 
 export const getTokensAfterRemove = async (

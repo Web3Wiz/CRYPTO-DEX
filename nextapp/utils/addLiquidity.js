@@ -11,30 +11,26 @@ export const addLiquidity = async (
   cryptoDevTokenAmountToAddInWei,
   ethAmoutToAddInWei
 ) => {
-  try {
-    const tokenContract = new Contract(
-      TOKEN_CONTRACT_ADDRESS,
-      TOKEN_CONTRACT_ABI,
-      signer
-    );
-    const exchangeContract = new Contract(
-      EXCHANGE_CONTRACT_ADDRESS,
-      EXCHANGE_CONTRACT_ABI,
-      signer
-    );
+  const tokenContract = new Contract(
+    TOKEN_CONTRACT_ADDRESS,
+    TOKEN_CONTRACT_ABI,
+    signer
+  );
+  const exchangeContract = new Contract(
+    EXCHANGE_CONTRACT_ADDRESS,
+    EXCHANGE_CONTRACT_ABI,
+    signer
+  );
 
-    let tx = await tokenContract.approve(
-      EXCHANGE_CONTRACT_ADDRESS,
-      cryptoDevTokenAmountToAddInWei.toString()
-    );
-    await tx.wait();
-    tx = await exchangeContract.addLiquidity(cryptoDevTokenAmountToAddInWei, {
-      value: ethAmoutToAddInWei,
-    });
-    await tx.wait();
-  } catch (error) {
-    console.error(error);
-  }
+  let tx = await tokenContract.approve(
+    EXCHANGE_CONTRACT_ADDRESS,
+    cryptoDevTokenAmountToAddInWei.toString()
+  );
+  await tx.wait();
+  tx = await exchangeContract.addLiquidity(cryptoDevTokenAmountToAddInWei, {
+    value: ethAmoutToAddInWei,
+  });
+  await tx.wait();
 };
 
 export const calculateCD = async (

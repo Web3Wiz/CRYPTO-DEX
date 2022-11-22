@@ -47,37 +47,33 @@ export const swapTokens = async (
   outputTokensToBeReceivedAfterSwap,
   isEthToCryptoDevConversion
 ) => {
-  try {
-    const tokenContract = new Contract(
-      TOKEN_CONTRACT_ADDRESS,
-      TOKEN_CONTRACT_ABI,
-      signer
+  const tokenContract = new Contract(
+    TOKEN_CONTRACT_ADDRESS,
+    TOKEN_CONTRACT_ABI,
+    signer
+  );
+  const exchangeContract = new Contract(
+    EXCHANGE_CONTRACT_ADDRESS,
+    EXCHANGE_CONTRACT_ABI,
+    signer
+  );
+  let tx;
+  if (isEthToCryptoDevConversion) {
+    tx = await exchangeContract.ethToCryptoDevToken(
+      outputTokensToBeReceivedAfterSwap,
+      { value: inputAmountInWei }
     );
-    const exchangeContract = new Contract(
+    await tx.wait();
+  } else {
+    tx = await tokenContract.approve(
       EXCHANGE_CONTRACT_ADDRESS,
-      EXCHANGE_CONTRACT_ABI,
-      signer
+      inputAmountInWei.toString()
     );
-    let tx;
-    if (isEthToCryptoDevConversion) {
-      tx = await exchangeContract.ethToCryptoDevToken(
-        outputTokensToBeReceivedAfterSwap,
-        { value: inputAmountInWei }
-      );
-      await tx.wait();
-    } else {
-      tx = await tokenContract.approve(
-        EXCHANGE_CONTRACT_ADDRESS,
-        inputAmountInWei.toString()
-      );
-      await tx.wait();
-      await exchangeContract.cryptoDevTokenToEth(
-        inputAmountInWei,
-        outputTokensToBeReceivedAfterSwap
-      );
-      await tx.wait();
-    }
-  } catch (error) {
-    console.error(error);
+    await tx.wait();
+    await exchangeContract.cryptoDevTokenToEth(
+      inputAmountInWei,
+      outputTokensToBeReceivedAfterSwap
+    );
+    await tx.wait();
   }
 };

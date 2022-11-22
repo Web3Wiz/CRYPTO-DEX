@@ -121,6 +121,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
+      setLoading(false);
+      window.alert(error.error.message);
     }
   };
   const _removeLiquidity = async () => {
@@ -138,6 +140,7 @@ export default function Home() {
       setLoading(false);
       setRemoveCD(zero);
       setRemoveEther(zero);
+      window.alert(error.error.message);
     }
   };
   const _getTokensAfterRemove = async (_removeLPTokens) => {
@@ -181,10 +184,10 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
-      window.alert(error.message);
       setLoading(false);
       await _getAmounts();
       setSwapAmount("");
+      window.alert(error.error.message);
     }
   };
   const _getAmountOfTokensReceivedFromSwap = async (_swapAmount) => {
