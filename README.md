@@ -1,2 +1,2 @@
-# CRYPTO-DEX
-Crypto Decentralized Exchange Like Uniswap
+# DeFi-Exchange
+DeFi Exchange Like Uniswap
