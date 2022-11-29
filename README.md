@@ -1,2 +1,2 @@
-# DeFi-Exchange
-DeFi Exchange Like Uniswap
+# DeFi-Exchange (Decentralized Finance)
+DeFi Exchange Like Uniswap 
